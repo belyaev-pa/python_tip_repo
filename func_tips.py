@@ -38,16 +38,16 @@ except KeyError:
 # при реализации демона на python, нужно выводить трейсбек в сислог, что бы понять
 # почему ваш демон упал (приведу код для python2):
 try:
-    self.run()
+  self.run()
 except BaseException as err:
-    syslog.syslog(syslog.LOG_ERR, 'Произошла ошибка при вызове функции run демона. Traceback:')
-    syslog.syslog(syslog.LOG_ERR, '-' * 100)
-    ex_type, ex, tb = sys.exc_info()    
-    for obj in traceback.extract_tb(tb):
-        syslog.syslog(syslog.LOG_ERR, 'Файл: {}, строка: {}, вызов: {}'.format(obj[0], obj[1], obj[2]))
-        syslog.syslog(syslog.LOG_ERR, '----->>>  {}'.format(obj[3]))
-    syslog.syslog(syslog.LOG_ERR, 'Ошибка: {}.'.format(err))
-    syslog.syslog(syslog.LOG_ERR, '-' * 100)
+  syslog.syslog(syslog.LOG_ERR, 'Произошла ошибка при вызове функции run демона. Traceback:')
+  syslog.syslog(syslog.LOG_ERR, '-' * 100)
+  ex_type, ex, tb = sys.exc_info()    
+  for obj in traceback.extract_tb(tb):
+    syslog.syslog(syslog.LOG_ERR, 'Файл: {}, строка: {}, вызов: {}'.format(obj[0], obj[1], obj[2]))
+    syslog.syslog(syslog.LOG_ERR, '----->>>  {}'.format(obj[3]))
+  syslog.syslog(syslog.LOG_ERR, 'Ошибка: {}.'.format(err))
+  syslog.syslog(syslog.LOG_ERR, '-' * 100)
 # в python 3 нет необходимости вызывать sys.exc_info() для получения объекта traceback 
 # объект traceback включен в экземпляр объекта exception, поэтому его можно получить так:
 tb = err.__traceback__
