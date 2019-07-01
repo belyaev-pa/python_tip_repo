@@ -53,5 +53,5 @@ except BaseException as err:
 tb = err.__traceback__
 # так же его можно записать так: 
 raise Exception("Произошла ошибка").with_traceback(traceback_obj)
-# второй кейс, при проектировании Rest API с помощью DRF, во втюхе при выполнении логики нужно отлавливать 
+# второй кейс, при проектировании Rest API с помощью DRF, во вьюхе при выполнении логики нужно отлавливать 
 # любой fuckup кода и вызывать APIException()
