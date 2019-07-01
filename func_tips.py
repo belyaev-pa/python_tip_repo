@@ -4,6 +4,7 @@
 min(random() for i in range(10_000)) # 1.03 msec  
 min(random() for _ in repeat(None, 10_000)) # 841 usec
 
+
 # tip №2
 # все три примера делают одно и тоже  (is just a cute way of writing)
 # 1
@@ -14,12 +15,14 @@ times = lambda n: repeat(None, n)
 def times(n): 
   return repeat(None, n)
   
+  
 # tip №3 
 # в python2 используй для обхода словаря
 for k, v in d.iteritems():
 # в python3 используй  https://www.python.org/dev/peps/pep-3106/
 for k, v in d.items():
 
+  
 # tip №4
 # Не используйте конструкцию :
 try:
@@ -40,11 +43,13 @@ except KeyError:
 try:
   self.run()
 except BaseException as err:
-  syslog.syslog(syslog.LOG_ERR, 'Произошла ошибка при вызове функции run демона. Traceback:')
+  syslog.syslog(syslog.LOG_ERR, 
+                'Произошла ошибка при вызове функции run демона. Traceback:')
   syslog.syslog(syslog.LOG_ERR, '-' * 100)
   ex_type, ex, tb = sys.exc_info()    
   for obj in traceback.extract_tb(tb):
-    syslog.syslog(syslog.LOG_ERR, 'Файл: {}, строка: {}, вызов: {}'.format(obj[0], obj[1], obj[2]))
+    syslog.syslog(syslog.LOG_ERR, 
+                  'Файл: {}, строка: {}, вызов: {}'.format(obj[0], obj[1], obj[2]))
     syslog.syslog(syslog.LOG_ERR, '----->>>  {}'.format(obj[3]))
   syslog.syslog(syslog.LOG_ERR, 'Ошибка: {}.'.format(err))
   syslog.syslog(syslog.LOG_ERR, '-' * 100)
@@ -53,5 +58,23 @@ except BaseException as err:
 tb = err.__traceback__
 # так же его можно записать так: 
 raise Exception("Произошла ошибка").with_traceback(traceback_obj)
-# второй кейс, при проектировании Rest API с помощью DRF, во вьюхе при выполнении логики нужно отлавливать 
+# второй кейс, при проектировании Rest API с помощью DRF, 
+# во вьюхе при выполнении логики нужно отлавливать 
 # любой fuckup кода и вызывать APIException()
+
+
+# tip 5
+# не используйте в производственном коде следующую конструкцию:
+from some_module import *
+# скорее всего, когда вы используюте такую конструкцию вам просто лень
+# списывать список того, что конкретно вы хотите имортировать, такое 
+# допустимо при отладке, но вам так же будет лень переписать это потом
+# или вы просто можете забыть.
+# Использование подобной конструкции должно быть в первую очередь 
+# подкреплено знаниями о том как Python обрабатывает исходный код
+# вместо этого используйте
+from some_module import Class1, Class2, Class3
+from some_module import some_function1, some_function2
+from some_module import some_function3, some_function4
+# а так же можно собрать свой пакет, что бы понять о чем речь смотри пример:
+# https://github.com/django/django/blob/master/django/db/models/__init__.py
