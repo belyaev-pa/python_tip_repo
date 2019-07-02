@@ -1,11 +1,11 @@
-# tip №1 
+# tip 1 
 # itertools.repeat() работает быстрее чем range() для циклов 
 # определенное количество повторений, когда вам не нужна переменная итерации
 min(random() for i in range(10_000)) # 1.03 msec  
 min(random() for _ in repeat(None, 10_000)) # 841 usec
 
 
-# tip №2
+# tip 2
 # все три примера делают одно и тоже  (is just a cute way of writing)
 # 1
 times = partial(repeat, None)  
@@ -16,14 +16,14 @@ def times(n):
   return repeat(None, n)
   
   
-# tip №3 
+# tip 3 
 # в python2 используй для обхода словаря
 for k, v in d.iteritems():
 # в python3 используй  https://www.python.org/dev/peps/pep-3106/
 for k, v in d.items():
 
   
-# tip №4
+# tip 4
 # Не используйте конструкцию :
 try:
   some_function()
@@ -78,3 +78,27 @@ from some_module import some_function1, some_function2
 from some_module import some_function3, some_function4
 # а так же можно собрать свой пакет, что бы понять о чем речь смотри пример:
 # https://github.com/django/django/blob/master/django/db/models/__init__.py
+
+
+# tip 6
+# Не используй + для формирования строк, так как строки в python 
+# являются immutable(неизменяемыми) объектами и каждый + будет формировать 
+# новую строку в памяти. Так же для формирования строк необходимо использовать
+# "новую" нотацию format() вместо старой % . https://www.python.org/dev/peps/pep-3101/
+# Например для формирования строки из списка необходимо 
+# воспользоваться такой конструкцией:
+my string = ''.join(iterable)
+# основное преимущество "новой" нотации над старой - сильная динамическая типизация
+
+
+# tip 7
+# Часто mutable(изменяемые) и immutable(неизменяемые) типы данных в Python порождают 
+# много головной боли. Этот пример описывает то, о чем идет речь:
+my_list = ['Hello']
+print(my_list)
+# Output: ['Hello']
+my_list = your_list
+my_list += ['World']
+print(your_list)
+# Output: ['Hello', 'World']
+# перед вами типичная ошибка копирования
