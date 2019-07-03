@@ -113,3 +113,5 @@ try:
     sys.exit()
 except BaseException:
     print ('Haha, but No!')
+# свое исключение стоит создавать так:
+class MyException(Exception): pass
