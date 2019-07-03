@@ -42,7 +42,7 @@ except KeyError:
 # почему ваш демон упал (приведу код для python2):
 try:
   self.run()
-except BaseException as err:
+except Exception as err:
   syslog.syslog(syslog.LOG_ERR, 
                 'Произошла ошибка при вызове функции run демона. Traceback:')
   syslog.syslog(syslog.LOG_ERR, '-' * 100)
@@ -102,3 +102,13 @@ my_list += ['World']
 print(your_list)
 # Output: ['Hello', 'World']
 # перед вами типичная ошибка копирования
+
+
+# tip 8 
+# не используйте в качестве родителя для своих исключений BaseException
+# для этого используется Exception, вот по этой причине:
+try:
+    import sys
+    sys.exit()
+except BaseException:
+    print ('Haha, but No!')
