@@ -108,6 +108,7 @@ print(your_list)
 # не используйте в качестве родителя для своих исключений BaseException
 # для этого используется Exception, вот по этой причине:
 # https://docs.python.org/3.7/library/exceptions.html#exception-hierarchy
+# пример потенциальной ошибки
 try:
     import sys
     sys.exit()
